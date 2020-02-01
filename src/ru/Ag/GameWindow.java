@@ -13,11 +13,4 @@ public class GameWindow extends JFrame {
         add(new GameField());
         setVisible(true);
     }
-
-    public static void main(String[] args) {
-        GameWindow gameWindow = new GameWindow();
-
-    }
-
-
 }

@@ -28,7 +28,6 @@ public class GameField extends JPanel implements ActionListener{
     private boolean inGame = true;
     private int score = 0;
 
-
     public GameField() {
         setBackground(Color.BLACK);
         loadImages();
