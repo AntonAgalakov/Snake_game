@@ -26,6 +26,7 @@ public class GameField extends JPanel implements ActionListener{
     private boolean up = false;
     private boolean down = false;
     private boolean inGame = true;
+    private boolean run = true;
     private int score = 0;
 
     public GameField() {
@@ -45,6 +46,21 @@ public class GameField extends JPanel implements ActionListener{
         timer = new Timer(250,this);
         timer.start();
         createApple();
+    }
+
+    public void restart() {
+        inGame = true;
+        dots = 3;
+        for (int i = 0; i < dots; i++) {
+            x[i] = 48 - i * DOT_SIZE;
+            y[i] = 48;
+        }
+        timer.start();
+        createApple();
+        right = true;
+        left = false;
+        up = false;
+        down = false;
     }
 
     public void createApple() {
@@ -79,9 +95,9 @@ public class GameField extends JPanel implements ActionListener{
         } else {
             setBackground(Color.BLACK);
             g.drawImage(gameOver, 5, 0, this);
-            String string2 = "You collected: " + score + " ap";
+            String string1 = "You collected: " + score + " ap";
             g.setColor(Color.RED);
-            g.drawString(string2, 100, 50);
+            g.drawString(string1, 100, 50);
         }
     }
 
@@ -160,7 +176,16 @@ public class GameField extends JPanel implements ActionListener{
                 up = false;
                 right = false;
                 left = false;
+            } else if (key == KeyEvent.VK_N) {
+                restart();
+            } else if (key == KeyEvent.VK_P && run) {
+                timer.stop();
+                run = false;
+            } else if (key == KeyEvent.VK_P && !run) {
+                timer.start();
+                run = true;
             }
+
         }
     }
 }
