@@ -1,11 +1,17 @@
 package ru.Ag;
 
 public class myRandom {
-    private int min = 1;
-    private int max = 19;
+    private int minX = 1;
+    private int maxX = 63;
+    private int minY = 1;
+    private int maxY = 30;
 
-    public int get() {
-        max -= min;
-        return (int) (Math.random() * ++max) + min;
+    public int getX() {
+        maxX -= minX;
+        return (int) (Math.random() * ++maxX) + minX;
+    }
+    public int getY() {
+        maxY -= minY;
+        return (int) (Math.random() * ++maxY) + minY;
     }
 }

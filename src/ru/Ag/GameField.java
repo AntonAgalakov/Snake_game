@@ -8,9 +8,10 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class GameField extends JPanel implements ActionListener{
-    private final int SIZE = 320;
-    private final int DOT_SIZE = 16;
-    private final int ALL_DOTS = 400;
+    private final int SIZE_X = 1902;
+    private final int SIZE_Y = 980;
+    private final int DOT_SIZE = 30;
+    private final int ALL_DOTS = 2304;
     private Image dot;
     private Image apple;
     private Image board;
@@ -30,7 +31,7 @@ public class GameField extends JPanel implements ActionListener{
     private int score = 0;
 
     public GameField() {
-        setBackground(Color.BLACK);
+        setBackground(Color.WHITE);
         loadImages();
         initGame();
         addKeyListener(new FieldKeyListener());
@@ -40,10 +41,10 @@ public class GameField extends JPanel implements ActionListener{
     public void initGame() {
         dots = 3;
         for (int i = 0; i < dots; i++) {
-            x[i] = 48 - i * DOT_SIZE;
-            y[i] = 48;
+            x[i] = 120 - i * DOT_SIZE;
+            y[i] = 120;
         }
-        timer = new Timer(250,this);
+        timer = new Timer(400,this);
         timer.start();
         createApple();
     }
@@ -52,8 +53,8 @@ public class GameField extends JPanel implements ActionListener{
         inGame = true;
         dots = 3;
         for (int i = 0; i < dots; i++) {
-            x[i] = 48 - i * DOT_SIZE;
-            y[i] = 48;
+            x[i] = 120 - i * DOT_SIZE;
+            y[i] = 120;
         }
         timer.start();
         createApple();
@@ -64,8 +65,8 @@ public class GameField extends JPanel implements ActionListener{
     }
 
     public void createApple() {
-        appleX = new myRandom().get() * DOT_SIZE;
-        appleY = new myRandom().get() * DOT_SIZE;
+        appleX = new myRandom().getX() * DOT_SIZE;
+        appleY = new myRandom().getY() * DOT_SIZE;
     }
 
     public void loadImages(){
@@ -83,21 +84,25 @@ public class GameField extends JPanel implements ActionListener{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (inGame) {
+            int i;
             g.drawImage(apple, appleX, appleY, this);
-            for (int i = 0; i < dots; i++)
+            for (i = 0; i < dots; i++)
                 g.drawImage(dot, x[i], y[i], this);
-            for (int i = 0; i < SIZE; i++) {
-                g.drawImage(board, 0, i, this);
+            for (i = 0; i < SIZE_X; i++) {
                 g.drawImage(board, i, 0, this);
-                g.drawImage(board, SIZE, i, this);
-                g.drawImage(board, i, SIZE, this);
+                g.drawImage(board, i, SIZE_Y, this);
+            }
+            for (i = 0; i < SIZE_Y; i++) {
+                g.drawImage(board, 0, i, this);
+                g.drawImage(board, SIZE_X, i, this);
             }
         } else {
-            setBackground(Color.BLACK);
-            g.drawImage(gameOver, 5, 0, this);
+            g.drawImage(gameOver, 500, 0, this);
+            Font myFont = new Font ("Courier New", 1, 28);
+            g.setFont (myFont);
             String string1 = "You collected: " + score + " ap";
             g.setColor(Color.RED);
-            g.drawString(string1, 100, 50);
+            g.drawString(string1, 780, 70);
         }
     }
 
@@ -131,13 +136,13 @@ public class GameField extends JPanel implements ActionListener{
                 break;
             }
 
-        if(x[0] >= 320)
+        if(x[0] >= SIZE_X)
             inGame = false;
-        if(x[0] < 16)
+        if(x[0] < 30)
             inGame = false;
-        if(y[0] >= 320)
+        if(y[0] >= SIZE_Y)
             inGame = false;
-        if(y[0] < 16)
+        if(y[0] < 30)
             inGame = false;
     }
 
